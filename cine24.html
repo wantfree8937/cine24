@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="style/style.css" rel="stylesheet">
+    <link href="style/searchbar.css" rel="stylesheet">
     <title>Cine24</title>
     <script src="src/sinescript.js" defer></script>
 </head>
@@ -16,14 +17,17 @@
             Cine24
         </h1>
     </header>
-    <div class="search_group">
-        <form class="search" onsubmit="searchMovie">
-            <label>영화 검색 : </label>
-            <input type="text" id="search-input" placeholder="영화 제목을 검색해 보세요" />
-            <button type="submit" id="search-btn">검색</button>
+    <div class="onbox">
+        <button class="populbtn" onclick="popular_Sort()">인기순</button>
+        <button class="oldbtn" onclick="Old_Sort()">오래된순</button>
+        <form class="box" onsubmit="search_Movie(event)">
+            <input type="text" class="search" id="search_input" placeholder="" oninput="toggleSearchButton()" />
+            <button type="submit" class="searchbtn" id="search_button" disabled></button>
         </form>
     </div>
-    <div id="movie_Container"></div>
+    <section id="movie_Container" class="movie_ContainerClass"></section>
+
 </body>
+
 
 </html>

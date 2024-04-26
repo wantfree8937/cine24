@@ -1,144 +1,128 @@
-// function searchMovie() {
+let allMovies = [];
 
-// }
+// TMDB API에서 영화 제목을 가져와 배열 생성
+fetch_MovieData = async () => {
 
-// fetchMovieData = async () => {
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             accept: 'application/json',
-//             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmM2U1NzkwNDYxZjE0Y2MwNWMxYzA0MzIwNTE4YzQ2YSIsInN1YiI6IjY2Mjc5ZTBkYjlhMGJkMDBjZGQ0NGI2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SN8whoS0_yG-gt7xue2f_CXakEcDCse_H4sgO3CmoyA'
-//         }
-//     };
-
-//     fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options)
-//         .then(response => response.json())
-//         .then(response => console.log(response))
-//         .catch(err => console.error(err));
-// }
-
-// fetchMovieData = async () => {
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             accept: 'application/json',
-//             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmM2U1NzkwNDYxZjE0Y2MwNWMxYzA0MzIwNTE4YzQ2YSIsInN1YiI6IjY2Mjc5ZTBkYjlhMGJkMDBjZGQ0NGI2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SN8whoS0_yG-gt7xue2f_CXakEcDCse_H4sgO3CmoyA'
-//         }
-//     };
-
-//     const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options);
-//     const data = await response.json();
-//     return data;
-
-// }
-
-
-// function createMovieCards () {
-//     const resourceTemplate = document.
-
-// }
-
-// 2차 //
-fetchMovieData = async () => {
-    const options = {
+    const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', {
         method: 'GET',
         headers: {
             accept: 'application/json',
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmM2U1NzkwNDYxZjE0Y2MwNWMxYzA0MzIwNTE4YzQ2YSIsInN1YiI6IjY2Mjc5ZTBkYjlhMGJkMDBjZGQ0NGI2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SN8whoS0_yG-gt7xue2f_CXakEcDCse_H4sgO3CmoyA'
         }
-    };
-
-    const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options);
-    const data = await response.json();
-    return data.results;
+    });
+    const jsondata = await response.json();
+    return jsondata.results;
 }
 
-createMovieCard = (movie) => {
+// 영화 카드 만들기
+create_MovieCard = (movie) => {
     const movieContainer = document.getElementById('movie_Container');
     const movieCard = document.createElement('div');
     movieCard.classList.add('movie_card');
 
+    // 영화 카드 클릭시 알림
+    movieCard.addEventListener('click', () => {
+        alert(`영화 id: ${movie.id}`);
+    });
+
     const posterURL = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; // 포스터 받아오기
     const moviePoster = document.createElement('img');
-    moviePoster.classList.add('movie-poster');
+
+    moviePoster.classList.add('movie_poster');
     moviePoster.src = posterURL;
     moviePoster.alt = movie.title;
 
     const movieInfo = document.createElement('div');
-    movieInfo.classList.add('movie-info');
+    movieInfo.classList.add('movie_info');
 
     const movieTitle = document.createElement('div');
-    movieTitle.classList.add('movie-title');
+    movieTitle.classList.add('movie_title');
     movieTitle.textContent = movie.title;
 
     const movieRating = document.createElement('div');
-    movieRating.classList.add('movie-rating');
+    movieRating.classList.add('movie_rating');
     movieRating.textContent = `Rating: ${movie.vote_average}`;
 
     const movieOverview = document.createElement('div');
-    movieOverview.classList.add('movie-overview');
+    movieOverview.classList.add('movie_overview');
     movieOverview.textContent = movie.overview;
 
     movieInfo.appendChild(movieTitle);
     movieInfo.appendChild(movieRating);
     movieInfo.appendChild(movieOverview);
+
     movieCard.appendChild(moviePoster);
     movieCard.appendChild(movieInfo);
+
     movieContainer.appendChild(movieCard);
 }
 
 (async () => {
-    const movies = await fetchMovieData();
-    movies.forEach(movie => createMovieCard(movie));
+    allMovies = await fetch_MovieData(); // 새로고침 시 영화 데이터를 한 번만 가져온다 
+    allMovies.forEach(movie => create_MovieCard(movie)); // 영화 카드 생성
 })();
 
-// 3차
-// fetchMovieData = async () => {
-//     const options = {
-//         method: 'GET',
-//         headers: {
-//             accept: 'application/json',
-//             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmM2U1NzkwNDYxZjE0Y2MwNWMxYzA0MzIwNTE4YzQ2YSIsInN1YiI6IjY2Mjc5ZTBkYjlhMGJkMDBjZGQ0NGI2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.SN8whoS0_yG-gt7xue2f_CXakEcDCse_H4sgO3CmoyA'
-//         }
-//     };
+search_Movie = async (ev) => { // 이벤트 객체를 매개변수로 받는다
 
-//     try {
-//         const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options);
-//         const data = await response.json();
-//         return data.results;
-//     } catch (err) {
-//         console.error(err);
-//         return [];
-//     }
-// }
+    ev.preventDefault(); // form에 의한 새로고침을 막음
 
-// createMovieCard = (movie) => {
-//     const card = document.createElement('div');
-//     card.classList.add('movie-card');
+    const movieContainer = document.getElementById('movie_Container'); // id: movie_Container의 요소를 가져옴
 
-//     const title = document.createElement('div');
-//     title.classList.add('movie-title');
-//     title.textContent = movie.title;
+    // 이전에 표시된 영화 카드들 삭제
+    movieContainer.innerHTML = '';
 
-//     const rating = document.createElement('div');
-//     rating.classList.add('movie-rating');
-//     rating.textContent = `Rating: ${movie.vote_average}`;
+    // 검색된 영화 목록 생성
+    const filteredMovies = allMovies.filter(movie => 
+        movie.title.toLowerCase().includes(document.getElementById('search_input').value.toLowerCase())
+    );
 
-//     card.appendChild(title);
-//     card.appendChild(rating);
+    filteredMovies.forEach(movie => {
+        create_MovieCard(movie);
+    });
+    
+    return false; // form에 의한 새로고침을 막음
+}
 
-//     return card;
-// }
+// 인기순 정렬
+popular_Sort = () => {
+    const movieContainer = document.getElementById('movie_Container');
 
-// displayMovies = async () => {
-//     const moviesContainer = document.getElementById('movies-container');
-//     moviesContainer.innerHTML = ''; // Clear previous content
+    movieContainer.innerHTML = '';
 
-//     const movies = await fetchMovieData();
-//     movies.forEach(movie => {
-//         const card = createMovieCard(movie);
-//         moviesContainer.appendChild(card);
-//     });
-// }
+    // rating에 따라 영화를 정렬
+    const sortedMovies = allMovies.slice().sort((a, b) => b.popularity - a.popularity);
 
-// displayMovies();
+    sortedMovies.forEach(movie => {
+        create_MovieCard(movie);
+    });
+}
+
+// 오래된순 정렬
+Old_Sort = () => {
+    const movieContainer = document.getElementById('movie_Container');
+
+    movieContainer.innerHTML = '';
+
+    // release_date에 따라 영화를 정렬
+    const sortedMovies = allMovies.slice().sort((a, b) => {
+        const dateA = new Date(a.release_date);
+        const dateB = new Date(b.release_date);
+        return dateA - dateB;
+    });
+
+    sortedMovies.forEach(movie => {
+        create_MovieCard(movie);
+    });
+}
+
+// 투명 검색 버튼 활성화/비활성화
+toggleSearchButton = () => {
+    const searchInput = document.getElementById('search_input');
+    const searchButton = document.getElementById('search_button');
+    
+    if (searchInput.value !== '') {
+        searchButton.disabled = false;
+    } else {
+        searchButton.disabled = true;
+    }
+}

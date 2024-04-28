@@ -1,4 +1,10 @@
+@font-face {
+    font-family: 'DoHyeon-Regular';
+    src: url('../font/DoHyeon-Regular.ttf');
+}
+
 * {
+    font-family: 'DoHyeon-Regular';
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -56,9 +62,9 @@ header {
     margin-bottom: 10px;
 }
 
-.movie_rating {
+.movie_release_date {
     color: black;
-    font-size: 16px;
+    font-size: 17px;
     margin-bottom: 10px;
 }
 
@@ -67,12 +73,40 @@ header {
 }
 
 .populbtn {
-    margin: 30px 0 0 30px;
+    font-size: medium;
+    margin: 35px 0 0 50px;
     width: 80px;
     height: 40px;
+    border-radius: 10px;
+    background-color: #fd5639;
+    color: white;
+    cursor: pointer;
 }
-.oldbtn{
-    margin: 30px 0 0 30px;
+
+.oldbtn {
+    font-size: medium;
+    margin: 35px 0 0 30px;
     width: 80px;
     height: 40px;
+    border-radius: 10px;
+    background-color: #fd5639;
+    color: white;
+    cursor: pointer;
 }
+
+.populbtn:hover {
+    background-color: white;
+    color: black;
+}
+
+.oldbtn:hover {
+    background-color: white;
+    color: black;
+}
+
+.translategoogle{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+

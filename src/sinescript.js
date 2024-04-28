@@ -28,6 +28,7 @@ create_MovieCard = (movie) => {
     const posterURL = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; // 포스터 받아오기
     const moviePoster = document.createElement('img');
 
+    // 영화 카드에 요소들 추가
     moviePoster.classList.add('movie_poster');
     moviePoster.src = posterURL;
     moviePoster.alt = movie.title;
@@ -39,16 +40,26 @@ create_MovieCard = (movie) => {
     movieTitle.classList.add('movie_title');
     movieTitle.textContent = movie.title;
 
-    const movieRating = document.createElement('div');
-    movieRating.classList.add('movie_rating');
-    movieRating.textContent = `Rating: ${movie.vote_average}`;
+    const movierating = document.createElement('div');
+    movierating.classList.add('movie_rating');
+    movierating.textContent = `rating: ${movie.vote_average}`;
+
+    const moviepopularity = document.createElement('div');
+    moviepopularity.classList.add('movie_popularity');
+    moviepopularity.textContent = `popularity: ${movie.popularity}`;
+
+    const movieReleasedate = document.createElement('div');
+    movieReleasedate.classList.add('movie_release_date');
+    movieReleasedate.textContent = `release date: ${movie.release_date}`;
 
     const movieOverview = document.createElement('div');
     movieOverview.classList.add('movie_overview');
     movieOverview.textContent = movie.overview;
 
     movieInfo.appendChild(movieTitle);
-    movieInfo.appendChild(movieRating);
+    movieInfo.appendChild(movierating);
+    movieInfo.appendChild(moviepopularity);
+    movieInfo.appendChild(movieReleasedate);
     movieInfo.appendChild(movieOverview);
 
     movieCard.appendChild(moviePoster);
@@ -72,11 +83,11 @@ search_Movie = async (ev) => { // 이벤트 객체를 매개변수로 받는다
     movieContainer.innerHTML = '';
 
     // 검색된 영화 목록 생성
-    const filteredMovies = allMovies.filter(movie => 
+    const Moviefilter = allMovies.filter(movie => 
         movie.title.toLowerCase().includes(document.getElementById('search_input').value.toLowerCase())
     );
 
-    filteredMovies.forEach(movie => {
+    Moviefilter.forEach(movie => {
         create_MovieCard(movie);
     });
     
@@ -89,7 +100,7 @@ popular_Sort = () => {
 
     movieContainer.innerHTML = '';
 
-    // rating에 따라 영화를 정렬
+    // 영화 인기도로 오름차순 정렬
     const sortedMovies = allMovies.slice().sort((a, b) => b.popularity - a.popularity);
 
     sortedMovies.forEach(movie => {
@@ -98,25 +109,21 @@ popular_Sort = () => {
 }
 
 // 오래된순 정렬
-Old_Sort = () => {
+old_Sort = () => {
     const movieContainer = document.getElementById('movie_Container');
 
     movieContainer.innerHTML = '';
 
-    // release_date에 따라 영화를 정렬
-    const sortedMovies = allMovies.slice().sort((a, b) => {
-        const dateA = new Date(a.release_date);
-        const dateB = new Date(b.release_date);
-        return dateA - dateB;
-    });
+    // 영화 날짜로 내림차순 정렬
+    const sortMovie = allMovies.slice().sort((a, b) => new Date(a.release_date) - new Date(b.release_date));
 
-    sortedMovies.forEach(movie => {
+    sortMovie.forEach(movie => {
         create_MovieCard(movie);
     });
 }
 
 // 투명 검색 버튼 활성화/비활성화
-toggleSearchButton = () => {
+toggle_SearchButton = () => {
     const searchInput = document.getElementById('search_input');
     const searchButton = document.getElementById('search_button');
     

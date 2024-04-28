@@ -129,7 +129,9 @@ toggle_SearchButton = () => {
     
     if (searchInput.value !== '') {
         searchButton.disabled = false;
+        searchButton.style.cursor = "pointer";
     } else {
         searchButton.disabled = true;
+        searchButton.style.cursor = "default";
     }
 }
